@@ -4,15 +4,15 @@ import { useEffect, useRef, useState } from "react";
 
 
 const products = [
-  { id: "integrity", name: "Integrity", color: "Washed black", alt: "Black cap with ivory Integrity embroidery", tone: "black", detail: "Washed black with quiet ivory embroidery. The cap you leave by the door." },
-  { id: "only-pans", name: "Only Pans", color: "Bone", alt: "Bone cap with dark Only Pans embroidery", tone: "bone", detail: "Bone cotton with a skillet stitch. A small joke for people paying attention." },
-  { id: "classic-blue", name: "Classic Blue", color: "Royal blue", alt: "Royal blue cap with an ivory raccoon emblem", tone: "blue", detail: "A clean hit of royal blue with the raccoon mark up front." },
+  { id: "nightshift", name: "Nightshift", color: "Washed black", alt: "Washed black cap with a small ivory eight-point star embroidery", tone: "black", detail: "Washed black with a quiet ivory star up front. The cap you leave by the door." },
+  { id: "chalk", name: "Chalk", color: "Bone", alt: "Bone cap with a small dark ASTRA wordmark embroidery", tone: "bone", detail: "Bone cotton twill with a clean dark wordmark stitched across the crown." },
+  { id: "signal", name: "Signal", color: "Royal blue", alt: "Royal blue cap with an ivory eight-point star emblem", tone: "blue", detail: "A clean hit of royal blue with the compass star mark up front." },
 ];
 
 const chapters = [
-  { name: "Scrappy", code: "01 / INSTINCT", lines: ["MAKE DO.", "MAKE IT YOURS."], detail: "The trash panda works with what’s around. It gets a little roughed up and figures it out anyway." },
-  { name: "Street-smart", code: "02 / TERRITORY", lines: ["KNOW THE", "BACK WAY."], detail: "Back alleys, late walks, a shortcut that becomes the long way home. That’s where the good stuff happens." },
-  { name: "Unbothered", code: "03 / ATTITUDE", lines: ["KEEP IT ON.", "KEEP MOVING."], detail: "The raccoon never needed an audience. Put on the cap you reach for every day and get on with yours." },
+  { name: "Direction", code: "01 / DIRECTION", lines: ["FIND YOUR", "NORTH."], detail: "Every route starts with something to steer by. Ours sits on the front panel." },
+  { name: "After dark", code: "02 / AFTER DARK", lines: ["THE CITY", "AFTER 11."], detail: "Empty streets, last trains, the long way home. That’s when the good stuff happens." },
+  { name: "Constant", code: "03 / CONSTANT", lines: ["SAME CAP.", "EVERY DAY."], detail: "No noise, no logo shouting. Just the one you reach for every morning." },
 ];
 
 function Icon({ kind = "diagonal", size = 20 }) {
@@ -31,20 +31,9 @@ function Asterisk({ className }) {
   return <svg viewBox="0 0 40 40" fill="none" className={className} aria-hidden="true"><path d="M20 0v40M0 20h40M6 6l28 28M34 6 6 34" stroke="currentColor" strokeWidth="4.6" /></svg>;
 }
 
-function Raccoon({ className }) {
-  return (
-    <svg className={className} viewBox="0 0 128 102" fill="none" aria-hidden="true">
-      <path d="M11 37 13 7l31 12 20-5 20 5 31-12 2 30 10 16-14 24-29 9-20 14-20-14-29-9L1 53z" fill="currentColor" />
-      <path d="m23 30 1-12 15 7zm82 0-1-12-15 7zM9 51l20-15 26 8 9 15 9-15 26-8 20 15-13 17-28 5-14-9-14 9-28-5z" fill="#141411" />
-      <path d="m29 49 19 3 4 8-16-2zm70 0-19 3-4 8 16-2z" fill="currentColor" />
-      <path d="M57 76h14l-7 7z" fill="#141411" />
-    </svg>
-  );
-}
-
 function CapImage({ product, hero, ...props }) {
   const image = <img src={`/caps/${product.id}.webp`} alt={product.alt} width="1000" height="650" draggable="false" {...props} />;
-  return hero ? <picture><source media="(max-width: 620px)" srcSet="/caps/integrity-mobile.webp" />{image}</picture> : image;
+  return hero ? <picture><source media="(max-width: 620px)" srcSet="/caps/nightshift-mobile.webp" />{image}</picture> : image;
 }
 
 export function SiteHeader({ pitch = false }) {
@@ -90,10 +79,10 @@ export function Hero({ pitch = false }) {
         <div className="hero-copy">
           <p className="eyebrow hero-kicker"><span className="signal" /> DROP 001 <span className="slash">/</span> EVERYDAY CAPS</p>
           <h1 id="hero-heading" className="hero-title">
-            <span className="headline-mask"><span>LESS NOISE.</span></span>
-            <span className="headline-mask accent"><span>MORE YOU.</span></span>
+            <span className="headline-mask"><span>BUILT FOR</span></span>
+            <span className="headline-mask accent"><span>THE LATE SHIFT.</span></span>
           </h1>
-          <p className="hero-description">Three everyday caps inspired by a city survivor. Pick the one you’ll wear out.</p>
+          <p className="hero-description">Three everyday caps for people who move after dark. Pick the one you’ll wear out.</p>
           <div className="hero-cta">
             <MagneticLink href={pitch ? "/#drop" : "#drop"}>Shop the drop</MagneticLink>
             <span className="hero-price">$40 EACH</span>
@@ -101,7 +90,6 @@ export function Hero({ pitch = false }) {
         </div>
         <div className="hero-art">
           <div className="art-grid" aria-hidden="true" />
-          <span className="art-label"><span>FIG. 01</span> / INTEGRITY</span>
           <span className="art-corner" aria-hidden="true">+</span>
           <span className="art-big" aria-hidden="true">01</span>
           <div className="art-orbit" aria-hidden="true"><i /><i /><i /></div>
@@ -109,13 +97,12 @@ export function Hero({ pitch = false }) {
           <div className="cap-parallax">
             <div className="cap-drop"><CapImage hero product={products[0]} className="hero-cap" fetchPriority="high" /></div>
           </div>
-          <div className="raccoon-stamp" aria-hidden="true"><Raccoon /><span>AFTER DARK</span></div>
-          <span className="asset-label">PLACEHOLDER RENDER</span>
+          <div className="mark-stamp" aria-hidden="true"><Asterisk /><span>AFTER DARK</span></div>
           <span className="art-index" aria-hidden="true">[ 001–003 ]</span>
         </div>
       </div>
       <div className="hero-strip">
-        <span><Asterisk /> MADE TO BE WORN.</span>
+        <span><Asterisk /> WEAR IT OUT.</span>
         {pitch ? <span className="strip-middle">12 SEC / PITCH CUT</span> : <a href="#story" className="strip-middle">SCROLL TO EXPLORE <Icon kind="down" size={14} /></a>}
         <button type="button" onClick={() => setReplay((value) => value + 1)} aria-label="Replay hero"><Icon kind="replay" size={15} /> REPLAY INTRO</button>
       </div>
@@ -127,11 +114,11 @@ function Marquee() {
   const [paused, setPaused] = useState(false);
 
   return (
-    <section className="marquee" aria-label="Made to be worn">
+    <section className="marquee" aria-label="Wear it out">
       <div className={`marquee-track ${paused ? "paused" : ""}`} aria-hidden="true">
         {[0, 1].map((group) => (
           <div className="marquee-group" key={group}>
-            {[0, 1, 2, 3].map((item) => <span key={item}>MADE TO BE WORN <Asterisk /></span>)}
+            {[0, 1, 2, 3].map((item) => <span key={item}>WEAR IT OUT <Asterisk /></span>)}
           </div>
         ))}
       </div>
@@ -164,7 +151,7 @@ function Story() {
   }, []);
 
   return (
-    <section ref={storyRef} id="story" className="story" aria-label="The trash panda story">
+    <section ref={storyRef} id="story" className="story" aria-label="The star you navigate by">
       {chapters.map((chapter, index) => (
         <article key={chapter.name} className={`chapter chapter-${index + 1}`}>
           <div className="chapter-stage">
@@ -177,7 +164,7 @@ function Story() {
                 <span className="chapter-index">0{index + 1} / 03</span>
               </div>
               <div className="chapter-content">
-                <div className="chapter-watermark" aria-hidden="true"><Raccoon /></div>
+                <div className="chapter-watermark" aria-hidden="true"><Asterisk /></div>
                 <div className="chapter-text">
                   <p className="eyebrow">{chapter.code}</p>
                   <h2 className="display">
@@ -217,7 +204,6 @@ function ProductCard({ product, index, open }) {
         <div className={`product-art tone-${product.tone}`}>
           <span className="product-number">0{index + 1} / 03</span>
           <div className="product-tilt"><CapImage product={product} loading="lazy" /></div>
-          <span className="asset-label">PLACEHOLDER RENDER</span>
           <span className="product-open"><Icon kind="diagonal" size={18} /></span>
         </div>
         <div className="product-meta">
@@ -249,7 +235,7 @@ function ProductRail() {
       <dialog ref={dialogRef} className="product-dialog" aria-labelledby="product-title" onClose={() => setActive(null)} onClick={(event) => { if (event.target === event.currentTarget) event.currentTarget.close(); }}>
         {active && (
           <div className="product-dialog-inner">
-            <div className={`dialog-image tone-${active.tone}`}><CapImage product={active} /><span className="asset-label">PLACEHOLDER RENDER</span></div>
+            <div className={`dialog-image tone-${active.tone}`}><CapImage product={active} /></div>
             <div className="dialog-copy">
               <p className="eyebrow">DROP 001 / {active.color}</p>
               <h2 id="product-title" className="display">{active.name}</h2>
@@ -269,14 +255,14 @@ function Footer() {
   return (
     <footer className="site-footer">
       <div className="footer-cta">
-        <div><p className="eyebrow"><span className="signal" /> ASTRA / DROP 001</p><h2 className="display">MADE TO<br />BE WORN<span>.</span></h2></div>
+        <div><p className="eyebrow"><span className="signal" /> ASTRA / DROP 001</p><h2 className="display">WEAR IT<br />OUT<span>.</span></h2></div>
         <MagneticLink href="#drop">Explore the caps</MagneticLink>
-        <Raccoon className="footer-raccoon" />
+        <Asterisk className="footer-mark" />
       </div>
       <div className="footer-bar">
         <a className="wordmark" href="/" aria-label="ASTRA home"><Asterisk />ASTRA</a>
-        <a className="instagram" href="https://www.instagram.com/trshpnda.streetwear/" target="_blank" rel="noreferrer">@trshpnda.streetwear <Icon size={16} /></a>
-        <span>ASTRA / CONCEPT PREVIEW</span>
+        <a className="instagram" href="#">@astra.caps <Icon size={16} /></a>
+        <span>Concept by The Dot — thedotco.in</span>
       </div>
     </footer>
   );

@@ -1,6 +1,8 @@
 # ASTRA — Drop 001
 
-A motion-led concept for three everyday $40 caps. Built with Next.js App Router, Tailwind CSS, and Framer Motion. Product details open in a zooming preview. The Instagram link uses the handle supplied in the brief.
+ASTRA — fictional cap brand, motion concept by The Dot.
+
+A motion-led concept for three everyday $40 caps. Built with Next.js App Router, Tailwind CSS, and Framer Motion. Product details open in a zooming preview.
 
 ## Run it
 
@@ -17,12 +19,10 @@ Open http://localhost:3000. To serve the optimized static build, run `npm run bu
 
 1. Open `/pitch/` in the browser and let it load. Frame the page at 1440 × 900 or 1920 × 1080 for the desktop animation.
 2. Start your screen recorder, then click **Replay intro** in the strip or reload the page. Move the pointer away from the interface.
-3. Record for 12 seconds. The cap drops and rotates into place, the two headline lines land, and the raccoon stamp peeks in. The cap drifts and settles through the end of the shot.
+3. Record for 12 seconds. The cap drops and rotates into place, the two headline lines land, and the compass star stamp peeks in. The cap drifts and settles through the end of the shot.
 
 The homepage keeps the intro short. On small screens, parallax and pinning give way to lighter motion and stacked story panels. The page respects the operating system’s reduced-motion preference and the marquee can be paused.
 
-## Product placeholders
+## Product photography
 
-The three `public/caps/*.webp` files are generated placeholder photography. The labels in the hero, rail, and detail views identify them. Hover colors are visual studies for the prototype. Product copy and imagery are illustrative. The product names and $40 pricing come from the brief.
-
-Built-in ImageGen prompts, summarized: isolated three-quarter studio photos of a washed black cap with ivory Integrity embroidery, a bone cap with Only Pans and a skillet stitch, and a royal-blue cap with a raccoon emblem. Each prompt called for cotton twill, visible seams, and a transparent background.
+The `public/caps/*.webp` files are isolated three-quarter studio renders of the three Drop 001 caps (`Nightshift` in washed black with an ivory eight-point star, `Chalk` in bone cotton twill with a dark ASTRA wordmark, and `Signal` in royal blue with an ivory star), rendered with visible cotton twill seams and transparent backgrounds. Hover colors are visual studies for the concept.

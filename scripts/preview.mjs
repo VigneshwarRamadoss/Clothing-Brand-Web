@@ -5,6 +5,7 @@ import { extname, resolve, sep } from "node:path";
 import { createGzip } from "node:zlib";
 
 const root = resolve("out");
+const host = process.env.HOST || "127.0.0.1";
 const port = Number(process.env.PORT || 4173);
 const types = {
   ".html": "text/html; charset=utf-8",
@@ -50,4 +51,4 @@ createServer(async (req, res) => {
   } catch {
     res.writeHead(404).end("Page not found");
   }
-}).listen(port, "127.0.0.1", () => console.log(`ASTRA preview at http://127.0.0.1:${port}`));
+}).listen(port, host, () => console.log(`ASTRA preview at http://${host}:${port}`));
