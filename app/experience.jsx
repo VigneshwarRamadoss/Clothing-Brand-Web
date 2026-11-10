@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { PosterFooter } from "./poster-footer";
 import {
   AnimatePresence,
   LazyMotion,
@@ -687,26 +688,6 @@ function ProductRail() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="site-footer">
-      <div className="footer-cta">
-        <div>
-          <p className="eyebrow">[ ASTRA / DROP 001 ]</p>
-          <RevealLines lines={["WEAR IT", "OUT."]} as="h2" className="display" />
-        </div>
-        <MagneticLink href="#drop">Explore the caps</MagneticLink>
-        <Asterisk className="footer-mark" />
-      </div>
-      <div className="footer-bar">
-        <a className="wordmark" href="/" aria-label="ASTRA home"><Asterisk />ASTRA</a>
-        <a className="instagram" href="#">@astra.caps <Icon size={16} /></a>
-        <span>[ Concept by The Dot — thedotco.in ]</span>
-      </div>
-    </footer>
-  );
-}
-
 export function Experience() {
   return (
     <LazyMotion features={domAnimation}>
@@ -717,7 +698,7 @@ export function Experience() {
         <Story />
         <ProductRail />
       </main>
-      <Footer />
+      <PosterFooter />
     </LazyMotion>
   );
 }
