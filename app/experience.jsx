@@ -343,6 +343,7 @@ export function Hero({ pitch = false }) {
                 type="button"
                 onClick={() => setReplay((value) => value + 1)}
                 aria-label="Replay hero"
+                suppressHydrationWarning
               >
                 <Icon kind="replay" size={15} /> [ REPLAY INTRO ]
               </button>
@@ -427,6 +428,7 @@ function Marquee() {
         className="marquee-pause"
         onClick={() => setPaused((v) => !v)}
         aria-label={paused ? "Play marquee" : "Pause marquee"}
+        suppressHydrationWarning
       >
         {paused ? "▶" : "Ⅱ"}
       </button>
@@ -450,7 +452,7 @@ function ProductCard({ product, index, open }) {
 
   return (
     <li className="product">
-      <button className="product-button" type="button" aria-haspopup="dialog" aria-label={`View ${product.name}, $40`} onClick={() => open(product)} onPointerMove={tilt} onPointerLeave={reset}>
+      <button className="product-button" type="button" aria-haspopup="dialog" aria-label={`View ${product.name}, $40`} onClick={() => open(product)} onPointerMove={tilt} onPointerLeave={reset} suppressHydrationWarning>
         <div className={`product-art tone-${product.tone}`}>
           <span className="product-number">[ 0{index + 1} / 03 ]</span>
           <div className="product-tilt"><CapImage product={product} loading="lazy" /></div>
@@ -494,9 +496,9 @@ function ProductRail() {
               <h2 id="product-title" className="display">{active.name}</h2>
               <p>{active.detail}</p>
               <strong>$40</strong>
-              <form method="dialog"><button className="dialog-back" type="submit">Back to the drop <Icon kind="right" size={17} /></button></form>
+              <form method="dialog"><button className="dialog-back" type="submit" suppressHydrationWarning>Back to the drop <Icon kind="right" size={17} /></button></form>
             </div>
-            <form method="dialog"><button className="dialog-close" type="submit" autoFocus aria-label="Close product"><Icon kind="close" /></button></form>
+            <form method="dialog"><button className="dialog-close" type="submit" autoFocus aria-label="Close product" suppressHydrationWarning><Icon kind="close" /></button></form>
           </div>
         )}
       </dialog>

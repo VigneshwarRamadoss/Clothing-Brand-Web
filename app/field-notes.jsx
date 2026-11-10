@@ -120,7 +120,7 @@ export function FieldNotes() {
               <ol className="fn-list">
                 {CHAPTERS.map((c, i) => (
                   <li key={c.name} aria-current={desk && i === active ? "step" : undefined}>
-                    <button type="button" onClick={() => go(i)} tabIndex={desk ? 0 : -1}>
+                    <button type="button" onClick={() => go(i)} tabIndex={desk ? 0 : -1} suppressHydrationWarning>
                       <span className="fn-num">{pad(i + 1)}</span><span className="fn-name">{c.name}</span>
                     </button>
                     <span className="fn-track-line" aria-hidden="true">{desk && !reduce ? <Fill p={p} i={i} /> : <span className="fn-fill fn-fill-static" />}</span>

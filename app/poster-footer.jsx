@@ -106,8 +106,8 @@ export function PosterFooter({ shopHref = "#drop" }) {
                   <p className="pf-help">One email when Drop 002 lands.</p>
                   <div className="pf-field">
                     <label htmlFor="pf-email" className="pf-sr">Email address</label>
-                    <input id="pf-email" type="email" placeholder="Your email" autoComplete="email" aria-describedby="pf-alerts-title" />
-                    <button type="submit" aria-label="Get drop alerts">
+                    <input id="pf-email" type="email" placeholder="Your email" autoComplete="email" aria-describedby="pf-alerts-title" suppressHydrationWarning />
+                    <button type="submit" aria-label="Get drop alerts" suppressHydrationWarning>
                       <Arrow />
                     </button>
                   </div>
@@ -125,7 +125,7 @@ export function PosterFooter({ shopHref = "#drop" }) {
               <span className="pf-bar-end">
                 <a href="#">@astra.caps</a>
                 <a href="https://thedotco.in" target="_blank" rel="noreferrer">Concept by The Dot<Arrow dir="out" className="pf-arrow pf-arrow-out" /></a>
-                <button type="button" onClick={toTop}>Back to top<Arrow dir="up" className="pf-arrow pf-arrow-up" /></button>
+                <button type="button" onClick={toTop} suppressHydrationWarning>Back to top<Arrow dir="up" className="pf-arrow pf-arrow-up" /></button>
               </span>
             </div>
           </m.div>
