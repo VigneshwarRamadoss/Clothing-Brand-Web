@@ -1,0 +1,24 @@
+import { chromium } from "playwright-core";
+import fs from "fs";
+const b = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox", "--hide-scrollbars"] });
+const ctx = await b.newContext({ viewport: { width: 1440, height: 900 }, recordVideo: { dir: "/tmp/shot/vidfn", size: { width: 1440, height: 900 } } });
+const p = await ctx.newPage(); const t0 = Date.now();
+await p.goto("http://127.0.0.1:4175/", { waitUntil: "networkidle" });
+await p.addStyleTag({ content: "html{scroll-behavior:auto!important}" });
+const g = await p.evaluate(() => { const s = document.querySelector("#story"), t = s.querySelector(".fn-track"); return { top: s.getBoundingClientRect().top + scrollY, len: t.offsetHeight - innerHeight }; });
+await p.evaluate((y) => scrollTo(0, y), g.top - 520); await p.waitForTimeout(800);
+const start = (Date.now() - t0) / 1000 - .2;
+await p.mouse.move(1300, 820);
+let cur = g.top - 520;
+const glide = async (to, ms) => { const n = Math.round(ms / 33), from = cur; for (let i = 1; i <= n; i++) { const t = i / n, e = t < .5 ? 4*t*t*t : 1 - Math.pow(-2*t+2, 3)/2; await p.evaluate((y) => scrollTo(0, y), from + (to - from) * e); await p.waitForTimeout(33); } cur = to; };
+await glide(g.top + g.len * 0.12, 1700); await p.waitForTimeout(900);
+await glide(g.top + g.len * 0.5, 2000); await p.waitForTimeout(1100);
+await glide(g.top + g.len * 0.86, 2000); await p.waitForTimeout(1100);
+// index jump back to 01 (smooth scroll)
+await p.addStyleTag({ content: "html{scroll-behavior:smooth!important}" });
+const btn = p.locator(".fn-list button").first(); const bb = await btn.boundingBox();
+await p.mouse.move(bb.x + 60, bb.y + bb.height / 2, { steps: 24 }); await p.waitForTimeout(350);
+await p.mouse.click(bb.x + 60, bb.y + bb.height / 2); await p.waitForTimeout(2300);
+const end = (Date.now() - t0) / 1000;
+const v = p.video(); await ctx.close(); const path = await v.path(); await b.close();
+fs.writeFileSync("/tmp/shot/vidfn/meta.json", JSON.stringify({ path, start, end })); console.log(path, start, end);

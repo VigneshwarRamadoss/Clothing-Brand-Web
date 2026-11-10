@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { FieldNotes } from "./field-notes";
 import { PosterFooter } from "./poster-footer";
 import {
   AnimatePresence,
@@ -24,11 +25,6 @@ const products = [
   { id: "signal", name: "Signal", color: "Royal blue", alt: "Royal blue cap with an ivory eight-point star emblem", tone: "blue", detail: "A clean hit of royal blue with the compass star mark up front." },
 ];
 
-const chapters = [
-  { name: "Direction", code: "[ 01 / DIRECTION ]", num: "01", lines: ["FIND YOUR", "NORTH."], detail: "Every route starts with something to steer by. Ours sits on the front panel.", product: products[2] },
-  { name: "After dark", code: "[ 02 / AFTER DARK ]", num: "02", lines: ["THE CITY", "AFTER 11."], detail: "Empty streets, last trains, the long way home. That’s when the good stuff happens.", product: products[0] },
-  { name: "Constant", code: "[ 03 / CONSTANT ]", num: "03", lines: ["SAME CAP.", "EVERY DAY."], detail: "No noise, no logo shouting. Just the one you reach for every morning.", product: products[1] },
-];
 
 const marqueeItems = [
   "WEAR IT OUT",
@@ -438,186 +434,6 @@ function Marquee() {
   );
 }
 
-function Story() {
-  const sectionRef = useRef(null);
-  const reduceMotion = useReducedMotion();
-  const [active, setActive] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-
-  const railFill = useSpring(scrollYProgress, {
-    stiffness: 140,
-    damping: 28,
-    mass: 0.3,
-  });
-
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    const next = latest < 0.34 ? 0 : latest < 0.67 ? 1 : 2;
-    setActive((prev) => (prev === next ? prev : next));
-  });
-
-  const activeChapter = chapters[active];
-
-  return (
-    <section
-      ref={sectionRef}
-      id="story"
-      className={
-        reduceMotion
-          ? "story story-static"
-          : "story min-[800px]:h-[300svh]"
-      }
-      aria-label="The star you navigate by"
-    >
-      {/* Semantic Stacked View for Mobile (<800px), Reduced Motion, and Screen Readers / Keyboard */}
-      <div className={reduceMotion ? "story-stack" : "story-stack min-[800px]:sr-only"}>
-        <div className="story-stack-header">
-          <span className="eyebrow">[ FIELD NOTES ]</span>
-          <ol className="story-stack-steps" aria-label="Chapters">
-            {chapters.map((item, idx) => (
-              <li key={item.name}>
-                <span>0{idx + 1}</span> {item.name}
-              </li>
-            ))}
-          </ol>
-        </div>
-        {chapters.map((chapter) => (
-          <article key={chapter.name} className="story-stack-card">
-            <div className="story-stack-top">
-              <p className="eyebrow">{chapter.code}</p>
-              <span className="chapter-index">[ {chapter.num} / 03 ]</span>
-            </div>
-            <div className="story-stack-body">
-              <div className="story-stack-copy">
-                <RevealLines lines={chapter.lines} as="h2" className="display story-heading" />
-                <p className="chapter-detail">{chapter.detail}</p>
-              </div>
-              <div className="story-stack-cap">
-                <CapImage product={chapter.product} loading="lazy" />
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-
-      {/* Pinned Desktop Stage (>=800px & prefers-reduced-motion: no-preference) */}
-      {!reduceMotion && (
-        <div
-          className="story-pinned hidden min-[800px]:grid overflow-clip"
-          aria-hidden="true"
-        >
-          <div className="story-pinned-frame">
-            <aside className="story-rail">
-              <span className="eyebrow">[ FIELD NOTES ]</span>
-              <div className="story-rail-track-wrap">
-                <div className="story-rail-track">
-                  <m.div
-                    className="story-rail-fill"
-                    style={{ scaleY: railFill, transformOrigin: "top" }}
-                  />
-                </div>
-                <ol className="chapter-steps">
-                  {chapters.map((item, step) => (
-                    <li
-                      key={item.name}
-                      className={step === active ? "is-active" : undefined}
-                    >
-                      <span>0{step + 1}</span> {item.name}
-                    </li>
-                  ))}
-                </ol>
-              </div>
-              <span className="chapter-index">[ 0{active + 1} / 03 ]</span>
-            </aside>
-
-            <div className="story-stage-main">
-              <div className="story-giant-num" aria-hidden="true">
-                <div className="story-giant-num-mask">
-                  <m.div
-                    className="story-giant-num-strip"
-                    animate={{ y: `-${active * (100 / 3)}%` }}
-                    transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    {chapters.map((item) => (
-                      <span key={item.num}>{item.num}</span>
-                    ))}
-                  </m.div>
-                </div>
-              </div>
-
-              <div className="story-stage-copy">
-                <AnimatePresence mode="popLayout">
-                  <m.div
-                    key={activeChapter.name}
-                    className="story-chapter-panel"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.35 }}
-                  >
-                    <p className="eyebrow">{activeChapter.code}</p>
-                    <div className="display story-heading">
-                      {activeChapter.lines.map((line, idx) => (
-                        <span key={line} className="reveal-mask block overflow-clip">
-                          <m.span
-                            className="block origin-bottom-left"
-                            initial={{ y: "110%", rotate: 3 }}
-                            animate={{ y: 0, rotate: 0 }}
-                            exit={{ y: "-105%", rotate: -2 }}
-                            transition={{
-                              duration: 0.75,
-                              ease: [0.16, 1, 0.3, 1],
-                              delay: idx * 0.08,
-                            }}
-                          >
-                            {line}
-                          </m.span>
-                        </span>
-                      ))}
-                    </div>
-                    <m.p
-                      className="chapter-detail"
-                      initial={{ opacity: 0, y: 14 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.55, delay: 0.12, ease: [0.16, 1, 0.3, 1] }}
-                    >
-                      {activeChapter.detail}
-                    </m.p>
-                  </m.div>
-                </AnimatePresence>
-              </div>
-
-              <div className="story-stage-visual">
-                <div className="chapter-watermark">
-                  <Asterisk />
-                </div>
-                <AnimatePresence mode="popLayout">
-                  <m.div
-                    key={activeChapter.product.id}
-                    className="story-cap-wrap"
-                    initial={{ opacity: 0, rotate: -14, scale: 0.86, y: 24 }}
-                    animate={{ opacity: 1, rotate: 0, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, rotate: 12, scale: 0.9, y: -24 }}
-                    transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                  >
-                    <CapImage product={activeChapter.product} loading="lazy" />
-                    <span className="story-cap-label eyebrow">
-                      [ {activeChapter.product.name} / {activeChapter.product.color} ]
-                    </span>
-                  </m.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </section>
-  );
-}
 
 function ProductCard({ product, index, open }) {
   function tilt(event) {
@@ -695,7 +511,7 @@ export function Experience() {
       <main id="main">
         <Hero />
         <Marquee />
-        <Story />
+        <FieldNotes />
         <ProductRail />
       </main>
       <PosterFooter />
