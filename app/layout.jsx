@@ -1,4 +1,20 @@
+import localFont from "next/font/local";
+import { Archivo } from "next/font/google";
 import "./globals.css";
+
+const anton = localFont({
+  src: "./fonts/anton.woff2",
+  variable: "--font-anton",
+  display: "swap",
+  adjustFontFallback: false,
+});
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-archivo",
+  display: "swap",
+});
 
 export const metadata = {
   title: "ASTRA — Built for the late shift",
@@ -7,8 +23,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang="en" className={`${anton.variable} ${archivo.variable}`} suppressHydrationWarning>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
